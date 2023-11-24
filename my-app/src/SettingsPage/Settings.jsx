@@ -1,7 +1,9 @@
 import {
+  Accordion,
+  AccordionDetails,
+  AccordionSummary,
   Avatar,
   Box,
-  Collapse,
   Drawer,
   List,
   ListItemButton,
@@ -9,9 +11,8 @@ import {
   Typography,
   useMediaQuery,
 } from "@mui/material";
-import React from "react";
+import React, { useState } from "react";
 import SideBar from "../Component2/Side_Navigation/SideBar";
-import ExpandLess from "@mui/icons-material/ExpandLess";
 import ExpandMore from "@mui/icons-material/ExpandMore";
 import ColorLensIcon from "@mui/icons-material/ColorLens";
 import NotificationsIcon from "@mui/icons-material/Notifications";
@@ -28,15 +29,10 @@ import { Link } from "react-router-dom";
 function Settings() {
   const isMobileScreen = useMediaQuery("(min-width:600px)");
 
-  const [open, setOpen] = React.useState(true);
-  const [openlist2, setOpenlist2] = React.useState(true);
+  const [expandedAccordion, setExpandedAccordion] = useState(false);
 
-  const handleClick = () => {
-    setOpen(!open);
-  };
-
-  const handleClicklist2 = () => {
-    setOpenlist2(!openlist2);
+  const handleAccordionChange = (panel) => (isExpanded) => {
+    setExpandedAccordion(isExpanded ? panel : expandedAccordion);
   };
 
   const Employeelist = [
@@ -108,24 +104,64 @@ function Settings() {
             />
             <UnfoldMoreSharpIcon fontSize="15px" />
           </ListItemButton>
-          <ListItemButton onClick={handleClick}>
-            <ListItemText sx={{ color: "grey" }} primary="Employee" />
-            {open ? (
-              <ExpandLess sx={{ color: "grey" }} />
-            ) : (
-              <ExpandMore sx={{ color: "grey" }} />
-            )}
-          </ListItemButton>
-          <Collapse in={open} timeout="auto" unmountOnExit>
-            <List component="div" disablePadding>
-              {Employeelist.map((data, index) => {
-                return (
-                  <Link style={{textDecoration:'none',color:'black'}}  to={data.path}>
+
+          <Accordion
+            expanded={expandedAccordion === "Employee"}
+            onChange={handleAccordionChange("Employee")}
+          >
+            <AccordionSummary
+              expandIcon={<ExpandMore />}
+              aria-controls="panel1a-content"
+              id="panel1a-header"
+            >
+              <Typography>Employee</Typography>
+            </AccordionSummary>
+            <AccordionDetails>
+              <List component="div" disablePadding>
+                {Employeelist.map((data, index) => {
+                  return (
+                    <Link
+                      key={index}
+                      style={{ textDecoration: "none", color: "black" }}
+                      to={data.path}
+                    >
+                      <ListItemButton
+                        sx={{
+                          borderRadius: "10px",
+                          ":hover": {
+                            backgroundColor: "#6A4BFC",
+                            color: "#fff",
+                          },
+                        }}
+                      >
+                        {data.icon}
+                        <Typography fontSize={15}>{data.title}</Typography>
+                      </ListItemButton>
+                    </Link>
+                  );
+                })}
+              </List>
+            </AccordionDetails>
+          </Accordion>
+
+          <Accordion
+            expanded={expandedAccordion === "Organisation"}
+            onChange={handleAccordionChange("Organisation")}
+          >
+            <AccordionSummary
+              expandIcon={<ExpandMore />}
+              aria-controls="panel1a-content"
+              id="panel1a-header"
+            >
+              <Typography>Organisation</Typography>
+            </AccordionSummary>
+            <AccordionDetails>
+              <List component="div" disablePadding>
+                {Organisationlist.map((data, index) => {
+                  return (
                     <ListItemButton
                       key={index}
                       sx={{
-                        ml: 1,
-                        mr: 1,
                         borderRadius: "10px",
                         ":hover": {
                           backgroundColor: "#6A4BFC",
@@ -137,44 +173,11 @@ function Settings() {
                       {data.icon}
                       <Typography fontSize={15}>{data.title}</Typography>
                     </ListItemButton>
-                  </Link>
-                );
-              })}
-            </List>
-          </Collapse>
-
-          <ListItemButton onClick={handleClicklist2}>
-            <ListItemText sx={{ color: "grey" }} primary="Organisation" />
-            {openlist2 ? (
-              <ExpandLess sx={{ color: "grey" }} />
-            ) : (
-              <ExpandMore sx={{ color: "grey" }} />
-            )}
-          </ListItemButton>
-          <Collapse in={openlist2} timeout="auto" unmountOnExit>
-            <List component="div" disablePadding>
-              {Organisationlist.map((data, index) => {
-                return (
-                  <ListItemButton
-                    key={index}
-                    sx={{
-                      ml: 1,
-                      mr: 1,
-                      borderRadius: "10px",
-                      ":hover": {
-                        backgroundColor: "#6A4BFC",
-                        color: "#fff",
-                        borderRadius: "10px",
-                      },
-                    }}
-                  >
-                    {data.icon}
-                    <Typography fontSize={15}>{data.title}</Typography>
-                  </ListItemButton>
-                );
-              })}
-            </List>
-          </Collapse>
+                  );
+                })}
+              </List>
+            </AccordionDetails>
+          </Accordion>
         </List>
       </div>
     </div>

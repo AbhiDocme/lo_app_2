@@ -21,37 +21,15 @@ import MenuIcon from "@mui/icons-material/Menu";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import KeyboardCommandKeyIcon from "@mui/icons-material/KeyboardCommandKey";
 import MaterialUISwitch from "../../Functions/MaterialUISwitch";
+import GraphicEqIcon from '@mui/icons-material/GraphicEq';
 
 const drawerWidth = 70;
 function NavContent({ mobileOpen, setMobileOpen }) {
   const isnonMobileScreen = useMediaQuery("(min-width:992px)");
-  // const isMobileScreen = useMediaQuery("(min-width:600px)");
-
-  // const menuId = isnonMobileScreen;
-  // const renderMenu = (
-  //   <Menu
-  //     anchorEl={anchorEl}
-  //     anchorOrigin={{
-  //       vertical: "top",
-  //       horizontal: "right",
-  //     }}
-  //     id={menuId}
-  //     keepMounted
-  //     transformOrigin={{
-  //       vertical: "top",
-  //       horizontal: "right",
-  //     }}
-  //     open={isMenuOpen}
-  //     onClose={handleMenuClose}
-  //   >
-  //     <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
-  //     <MenuItem onClick={handleMenuClose}>My account</MenuItem>
-  //   </Menu>
-  // );
 
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = useState(false);
 
-  const isMobileMenuOpen = mobileMoreAnchorEl;
+  const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
 
   const handleMobileMenuClose = () => {
     setMobileMoreAnchorEl(null);
@@ -65,7 +43,6 @@ function NavContent({ mobileOpen, setMobileOpen }) {
     setMobileOpen(!mobileOpen);
   };
 
-  const mobileMenuId = isnonMobileScreen;
   const renderMobileMenu = (
     <Menu
       anchorEl={mobileMoreAnchorEl}
@@ -73,7 +50,7 @@ function NavContent({ mobileOpen, setMobileOpen }) {
         vertical: "top",
         horizontal: "right",
       }}
-      id="menu" //id={mobileMenuId}
+      id="menu"
       keepMounted
       transformOrigin={{
         vertical: "top",
@@ -87,8 +64,13 @@ function NavContent({ mobileOpen, setMobileOpen }) {
           <FormGroup>
             <FormControlLabel
               sx={{ transform: "translate(12px)" }}
-              id="theme"
-              control={<MaterialUISwitch sx={{ m: 1 }} defaultChecked />}
+              control={
+                <MaterialUISwitch
+                  id="theme_mobileview"
+                  sx={{ m: 1 }}
+                  defaultChecked
+                />
+              }
             />
           </FormGroup>
           <FormGroup>
@@ -116,6 +98,15 @@ function NavContent({ mobileOpen, setMobileOpen }) {
     </Menu>
   );
 
+  const chipdata = [
+    {
+      id: 1,
+      src: "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d5/Mamooty.jpg/220px-Mamooty.jpg",
+      name: "First Name",
+      email: "Email address",
+    },
+  ];
+
   return (
     <div>
       <AppBar
@@ -138,6 +129,7 @@ function NavContent({ mobileOpen, setMobileOpen }) {
             <MenuIcon />
           </IconButton>
           <Typography
+          display={{ xs: "none", lg: "flex" }}
             variant="h6"
             component="div"
             fontSize={"medium"}
@@ -175,8 +167,13 @@ function NavContent({ mobileOpen, setMobileOpen }) {
                 size="small"
                 id="searchbar"
                 autoComplete="off"
-                placeholder="Search"
+                placeholder="Search or Command"
                 InputProps={{
+                  startAdornment: (
+                    <InputAdornment position="start">
+                      <GraphicEqIcon fontSize="15px" />
+                    </InputAdornment>
+                  ),
                   endAdornment: (
                     <InputAdornment position="start">
                       <KeyboardCommandKeyIcon fontSize="15px" />
@@ -191,8 +188,13 @@ function NavContent({ mobileOpen, setMobileOpen }) {
               <Stack spacing={1} direction="row">
                 <FormGroup>
                   <FormControlLabel
-                    id="theme"
-                    control={<MaterialUISwitch sx={{ m: 1 }} defaultChecked />}
+                    control={
+                      <MaterialUISwitch
+                        id="theme"
+                        sx={{ m: 1 }}
+                        defaultChecked
+                      />
+                    }
                   />
                 </FormGroup>
                 <FormGroup>
@@ -204,23 +206,34 @@ function NavContent({ mobileOpen, setMobileOpen }) {
                     <NotificationsIcon color="action" />
                   </Badge>
                 </FormGroup>
-                <Chip
-                  sx={{
-                    transform: "translate(0px,5px)",
-                    height: "2.3rem",
-                    width: "9rem",
-                  }}
-                  avatar={
-                    <Avatar
-                      sx={{ transform: "translate(-5px,0px)" }}
-                      alt="Natacha"
-                      src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d5/Mamooty.jpg/220px-Mamooty.jpg"
-                    />
-                  }
-                  label={["First Name", <br />, "Email Address"]}
-                  variant="filled"
-                  color="default"
-                />
+                {chipdata &&
+                  chipdata.map((data, index) => {
+                    return (
+                      <Chip
+                        key={data.id}
+                        sx={{
+                          transform: "translate(0px,5px)",
+                          height: "2.3rem",
+                          width: "9rem",
+                        }}
+                        avatar={
+                          <Avatar
+                            sx={{ transform: "translate(-5px,0px)" }}
+                            alt="Natacha"
+                            src={data.src}
+                          />
+                        }
+                        label={
+                          <>
+                            <Typography fontSize={15}>{data.name}</Typography>
+                            <Typography fontSize={12}>{data.email}</Typography>
+                          </>
+                        }
+                        variant="filled"
+                        color="default"
+                      />
+                    );
+                  })}
               </Stack>
             </Box>
           ) : (
@@ -229,7 +242,6 @@ function NavContent({ mobileOpen, setMobileOpen }) {
                 size="large"
                 id="mobile_menu_icon"
                 aria-label="show more"
-                aria-controls={mobileMenuId}
                 aria-haspopup="true"
                 onClick={handleMobileMenuOpen}
                 color="inherit"
@@ -241,7 +253,6 @@ function NavContent({ mobileOpen, setMobileOpen }) {
         </Toolbar>
       </AppBar>
       {renderMobileMenu}
-      {/* {renderMenu} */}
     </div>
   );
 }

@@ -159,6 +159,7 @@ function Form() {
         <FormControlLabel
           control={
             <Checkbox
+              id="checkbox"
               size="small"
               sx={{
                 color: "#6640EB",
@@ -168,7 +169,6 @@ function Form() {
               }}
             />
           }
-          id="checkbox"
           checked={isChecked}
           onChange={handleCheckboxChange}
           label="Remember Me"

@@ -14,7 +14,6 @@ import React from "react";
 import Settings from "./Settings";
 import SideBar from "../Component2/Side_Navigation/SideBar";
 import FiberManualRecordIcon from "@mui/icons-material/FiberManualRecord";
-import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 
 function Appearance() {
   const isMobileScreen = useMediaQuery("(min-width:600px)");
@@ -28,7 +27,7 @@ function Appearance() {
         sx={
           isMobileScreen
             ? { marginLeft: "310px", mr: 1, mb: 4, marginTop: "5rem" }
-            : { ml: 1, mr: 1, marginTop: "5rem", mb: 2 }
+            : { pl: 1, pr: 1, marginTop: "5rem", mb: 2 }
         }
       >
         <Typography variant="h5" fontWeight={600}>
@@ -41,7 +40,7 @@ function Appearance() {
         <Divider sx={{ mt: 2 }} />
         <br />
         <Box>
-          <Grid container display={{ xs: "block", lg: "flex" }} spacing={2}>
+          <Grid container display={{ xs: "block", lg: "flex" }} sx={{alignItems:{xs:'center'},justifyContent:{xs:'center'}}} spacing={2}>
             <Grid item xs>
               <Typography fontSize={15} fontWeight={600}>
                 Interface theme
@@ -51,13 +50,31 @@ function Appearance() {
               </Typography>
             </Grid>
             <Grid item xs>
-              <Box sx={{ border: "1px solid black", height: "150px" }}></Box>
+              <Box
+                sx={{
+                  border: "1px solid black",
+                  height: "150px",
+                  width: "250px",
+                }}
+              ></Box>
             </Grid>
             <Grid item xs>
-              <Box sx={{ border: "1px solid black", height: "150px" }}></Box>
+              <Box
+                sx={{
+                  border: "1px solid black",
+                  height: "150px",
+                  width: "250px",
+                }}
+              ></Box>
             </Grid>
             <Grid item xs>
-              <Box sx={{ border: "1px solid black", height: "150px" }}></Box>
+              <Box
+                sx={{
+                  border: "1px solid black",
+                  height: "150px",
+                  width: "250px",
+                }}
+              ></Box>
             </Grid>
           </Grid>
         </Box>
@@ -81,7 +98,7 @@ function Appearance() {
             <Grid item xs>
               <Autocomplete
                 size="small"
-                id="sidebar feature"
+                id="sidebar_feature"
                 options={Languages}
                 sx={{ width: 300, mt: 2 }}
                 renderInput={(params) => (
@@ -126,7 +143,7 @@ function Appearance() {
               <Autocomplete
                 size="small"
                 disablePortal
-                id="combo-box-demo"
+                id="language_select"
                 options={Languages}
                 defaultValue={Languages[0]}
                 sx={{ width: 300, mt: 2 }}
@@ -134,25 +151,25 @@ function Appearance() {
               />
               <br />
               <Box display={"flex"}>
-                <Switch defaultChecked />
-                <Typography fontSize={15} fontWeight={600}>
+                <Switch id="arabic_tablefeild" defaultChecked />
+                <Box fontSize={15} fontWeight={600}>
                   Show Arabic in table fields
                   <Typography fontSize={12}>
                     Gorem ipsum dolor sit amet,
                     <br /> consectetur adipiscing elit.
                   </Typography>
-                </Typography>
+                </Box>
               </Box>
               <br />
               <Box display={"flex"}>
-                <Switch defaultChecked />
-                <Typography fontSize={15} fontWeight={600}>
-                  Show Arabic in table fields
+                <Switch id="Enable" defaultChecked />
+                <Box fontSize={15} fontWeight={600}>
+                  Enable
                   <Typography fontSize={12}>
                     Gorem ipsum dolor sit amet,
                     <br /> consectetur adipiscing elit.
                   </Typography>
-                </Typography>
+                </Box>
               </Box>
             </Grid>
           </Grid>
@@ -175,36 +192,26 @@ function Appearance() {
               </Typography>
             </Grid>
             <Grid item xs>
-              <Autocomplete
-                size="small"
-                disablePortal
-                id="combo-box-demo"
-                options={Languages}
-                defaultValue={Languages[0]}
-                sx={{ width: 300, mt: 2 }}
-                renderInput={(params) => <TextField {...params} />}
-              />
-              <br />
               <Box display={"flex"}>
-                <Switch defaultChecked />
-                <Typography fontSize={15} fontWeight={600}>
+                <Switch id="Show_Suggestion" defaultChecked />
+                <Box fontSize={15} fontWeight={600}>
                   Show Suggestion
                   <Typography fontSize={12}>
                     Gorem ipsum dolor sit amet,
                     <br /> consectetur adipiscing elit.
                   </Typography>
-                </Typography>
+                </Box>
               </Box>
               <br />
               <Box display={"flex"}>
-                <Switch defaultChecked />
-                <Typography fontSize={15} fontWeight={600}>
+                <Switch id="Voice_command" defaultChecked />
+                <Box fontSize={15} fontWeight={600}>
                   Disable Voice Command
                   <Typography fontSize={12}>
                     Gorem ipsum dolor sit amet,
                     <br /> consectetur adipiscing elit.
                   </Typography>
-                </Typography>
+                </Box>
               </Box>
             </Grid>
           </Grid>
